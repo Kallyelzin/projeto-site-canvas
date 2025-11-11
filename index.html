@@ -9,11 +9,11 @@
             --cor-fundo-principal: #121212;
             --cor-fundo-secundario: #1e1e1e;
             --cor-texto: #e0e0e0;
-            --cor-primaria-foco: #007bff; /* Azul */
+            --cor-primaria-foco: #007bff;
             --cor-secundaria-foco: #0056b3;
             --cor-cabecalho: #0a0a0a;
             --cor-preto-udemy: #000000;
-            --cor-sucesso: #28a745; /* Verde */
+            --cor-sucesso: #28a745;
         }
         body {
             font-family: 'Arial', sans-serif;
@@ -207,7 +207,7 @@
             font-size: 1.1em;
         }
         .plan-features li::before {
-            content: '✅'; /* Ícone de checkmark mais amigável */
+            content: '✅';
             margin-right: 10px;
             font-size: 1.1em;
             color: var(--cor-sucesso);
@@ -327,7 +327,6 @@
             flex-direction: column;
             z-index: 1001;
         }
-        /* NOVO ESTILO PARA O CABEÇALHO DO CHAT */
         .chat-header {
             padding: 10px 15px;
             background-color: var(--cor-primaria-foco);
@@ -357,50 +356,41 @@
             display: flex;
             flex-direction: column;
         }
-        
-        /* NOVO ESTILO: Barra de Input do Chat */
         .chat-input {
             display: flex;
             padding: 10px;
-            background-color: #222; /* Fundo escuro */
+            background-color: #222;
             border-top: 1px solid #333;
         }
-
         .chat-input input {
             flex-grow: 1;
             padding: 10px 15px;
-            border: 1px solid #444; /* Borda sutil */
+            border: 1px solid #444;
             background-color: #121212;
             color: #e0e0e0;
-            border-radius: 20px; /* Bordas arredondadas */
+            border-radius: 20px;
             margin: 0;
             margin-right: 10px;
             outline: none;
             transition: border-color 0.3s;
         }
-
         .chat-input input:focus {
-            border-color: var(--cor-primaria-foco); /* Foco azul */
+            border-color: var(--cor-primaria-foco);
         }
-
         .chat-input button {
             background: none;
             border: none;
-            color: var(--cor-primaria-foco); /* Cor do botão como o azul primário */
-            font-size: 1.5em; /* Aumenta o tamanho do ícone */
+            color: var(--cor-primaria-foco);
+            font-size: 1.5em;
             cursor: pointer;
             padding: 0 10px;
             transition: color 0.3s, transform 0.1s;
-            font-weight: bold; /* Para o ícone ser mais visível */
+            font-weight: bold;
         }
-
         .chat-input button:hover {
             color: var(--cor-secundaria-foco);
             transform: scale(1.1);
         }
-
-        /* Fim dos novos estilos do chat-input */
-
         .message {
             margin-bottom: 10px;
             padding: 10px 15px;
@@ -421,12 +411,64 @@
             align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--cor-fundo-secundario);
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            z-index: 1001;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+        .dropdown-menu a {
+            color: var(--cor-texto);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95em;
+            transition: background 0.2s;
+        }
+        .dropdown-menu a:hover {
+            background-color: #333;
+        }
+        .dropdown-menu.show {
+            display: block;
+        }
+        .tab-links a {
+            color: #aaa;
+            font-weight: bold;
+            padding: 8px 0;
+            margin-right: 20px;
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        .tab-links a.active,
+        .tab-links a:hover {
+            color: white;
+            border-bottom: 2px solid white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: grid;
+        }
     </style>
 </head>
 <body>
+    <!-- MODAIS -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="document.getElementById('loginModal').style.display='none'">×</span>
+            <span class="close" onclick="document.getElementById('loginModal').style.display='none'">x</span>
             <h3 style="color: var(--cor-primaria-foco); border-bottom: 2px solid var(--cor-primaria-foco); padding-bottom: 10px; margin-bottom: 20px;">
                 Fazer Login na Task Master Edu
             </h3>
@@ -443,25 +485,22 @@
             </form>
         </div>
     </div>
-
     <div id="statusModal" class="modal">
         <div class="modal-content" style="text-align: center;">
-            <span class="close" onclick="document.getElementById('statusModal').style.display='none'">×</span>
+            <span class="close" onclick="document.getElementById('statusModal').style.display='none'">x</span>
             <h3 id="statusTitle" style="color: var(--cor-sucesso);">Sucesso!</h3>
             <p id="statusMessage">Ação realizada com sucesso!</p>
             <button class="cta-button" onclick="document.getElementById('statusModal').style.display='none'" style="margin-top: 20px;">OK</button>
         </div>
     </div>
-
     <div id="confirmPixModal" class="modal">
         <div class="modal-content" style="text-align: center;">
-            <span class="close" onclick="document.getElementById('confirmPixModal').style.display='none'">×</span>
+            <span class="close" onclick="document.getElementById('confirmPixModal').style.display='none'">x</span>
             <h3 style="color: #ffc107;">Confirmar Compra via PIX</h3>
             <p><strong>Você gostaria mesmo de comprar esse plano?</strong></p>
             <p style="background:#2a2a2a;padding:12px;border-radius:6px;font-family:monospace;color:#0f0;">
                 <strong>PIX:</strong> GrupoEM693@associacaocactus.com.br
             </p>
-            
             <p style="font-size:0.9em;color:#aaa;">Após o pagamento, o acesso será liberado automaticamente.</p>
             <div style="display:flex;gap:10px;margin-top:20px;">
                 <button id="cancelPix" class="cta-button" style="background:#555;flex:1;">Cancelar</button>
@@ -469,10 +508,9 @@
             </div>
         </div>
     </div>
-
     <div id="contactModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="document.getElementById('contactModal').style.display='none'">×</span>
+            <span class="close" onclick="document.getElementById('contactModal').style.display='none'">x</span>
             <h3 style="color: var(--cor-primaria-foco); margin-bottom: 20px;">Fale com um Especialista</h3>
             <form id="contactForm">
                 <div class="modal-input-group">
@@ -502,16 +540,27 @@
         </div>
     </div>
 
+    <!-- HEADER -->
     <header>
         <div class="container navbar">
             <div class="logo">TASK MASTER EDU</div>
             <nav>
                 <a href="#planos-section" style="margin-right: 20px;">Planos</a>
-                <a href="#" class="cta-button" id="loginBtn" style="background: var(--cor-sucesso); color: black;">Olá, Kally</a>
+                <!-- BOTÃO DE LOGIN (COMEÇA DESLOGADO) -->
+                <div class="user-menu">
+                    <button id="loginBtn" class="cta-button">
+                        Fazer Login
+                    </button>
+                    <div id="userDropdown" class="dropdown-menu">
+                        <a href="#" id="switchAccount">Trocar de Conta</a>
+                        <a href="#" id="logout">Deslogar</a>
+                    </div>
+                </div>
             </nav>
         </div>
     </header>
 
+    <!-- HERO -->
     <section class="hero-section">
         <div class="container">
             <div class="hero-content">
@@ -523,15 +572,17 @@
         </div>
     </section>
 
+    <!-- ABAS -->
     <section class="course-tabs">
         <div class="container">
             <h2>Habilidades que Transformam a Organização Escolar</h2>
-            <div style="margin-bottom: 20px;">
-                <a href="#" style="color: white; font-weight: bold; padding-bottom: 5px; border-bottom: 2px solid white; margin-right: 15px; text-decoration: none;">Alunos</a>
-                <a href="#" style="color: #aaa; margin-right: 15px; text-decoration: none;">Professores</a>
-                <a href="#" style="color: #aaa; text-decoration: none;">Gestores</a>
+            <div class="tab-links" style="margin-bottom: 20px;">
+                <a href="#" class="tab-link active" data-tab="alunos">Alunos</a>
+                <a href="#" class="tab-link" data-tab="professores">Professores</a>
+                <a href="#" class="tab-link" data-tab="gestores">Gestores</a>
             </div>
-            <div class="course-grid">
+            <!-- ABA ALUNOS -->
+            <div id="alunos" class="tab-content course-grid active">
                 <div class="course-card">
                     <div class="course-image">Tarefas Inteligentes</div>
                     <div class="card-content">
@@ -541,6 +592,9 @@
                         <button class="buy-button" data-plan="Plano Essencial Gratuito" data-price="GRÁTIS">Ativar Plano</button>
                     </div>
                 </div>
+            </div>
+            <!-- ABA PROFESSORES -->
+            <div id="professores" class="tab-content course-grid">
                 <div class="course-card">
                     <div class="course-image">Painel de Acompanhamento</div>
                     <div class="card-content">
@@ -550,6 +604,9 @@
                         <button class="buy-button" data-plan="Plano Pro" data-price="R$ 46,90">Comprar Agora</button>
                     </div>
                 </div>
+            </div>
+            <!-- ABA GESTORES -->
+            <div id="gestores" class="tab-content course-grid">
                 <div class="course-card">
                     <div class="course-image">Intervenção Precoce</div>
                     <div class="card-content">
@@ -572,6 +629,7 @@
         </div>
     </section>
 
+    <!-- PLANOS -->
     <section class="plan-section" id="planos-section">
         <div class="container">
             <div class="plan-box">
@@ -585,7 +643,7 @@
                         <li>Suporte e Treinamento Completo para sua equipe.</li>
                     </ul>
                     <button id="contactBtn" class="cta-button" style="background:white;color:black;margin-top:20px;">Fale com um Especialista</button>
-                    <p style="font-size:0.9em;color:#ccc;margin-top:10px;">A partir de R$ [Valor]/aluno/mês</p>
+                    <p id="priceText" style="font-size:0.9em;color:#ccc;margin-top:10px;">A partir de R$ [Valor]/aluno/mês</p>
                 </div>
                 <div class="plan-image">
                     <canvas id="dashboardChart"></canvas>
@@ -594,8 +652,10 @@
         </div>
     </section>
 
-    <div class="chatbot-toggle" id="chatbotToggle">💬</div> <div class="chatbot-window" id="chatbotWindow">
-        <div class="chat-header">TaskMaster AI Assistant <span class="close" id="chatClose">×</span></div>
+    <!-- CHATBOT -->
+    <div class="chatbot-toggle" id="chatbotToggle">Chat Icon</div>
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chat-header">TaskMaster AI Assistant <span class="close" id="chatClose">x</span></div>
         <div class="chat-body" id="chatBody">
             <div class="message ai">
                 Olá! Sou sua assistente de organização. Em que área você gostaria de focar: <strong>Aluno</strong>, <strong>Professor</strong>, <strong>Gestor</strong> ou <strong>Planos</strong>?
@@ -603,14 +663,13 @@
         </div>
         <div class="chat-input">
             <input type="text" id="chatInput" placeholder="Digite sua dúvida ou tarefa...">
-            <button id="chatSend">▶️</button>
+            <button id="chatSend">Send Arrow</button>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // GRÁFICO
             const ctx = document.getElementById('dashboardChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
@@ -638,8 +697,6 @@
                 }
             });
 
-            // ELEMENTOS
-            const loginBtn = document.getElementById('loginBtn');
             const loginModal = document.getElementById('loginModal');
             const loginForm = document.getElementById('loginForm');
             const statusModal = document.getElementById('statusModal');
@@ -653,7 +710,87 @@
             let currentPlan = '', currentPrice = '';
             let firstChatOpen = true;
 
-            // FUNÇÃO PARA ADICIONAR MENSAGEM
+            // Checkmark BOTÃO "FALE COM UM ESPECIALISTA"
+            contactBtn.addEventListener('click', () => {
+                contactModal.style.display = 'block';
+            });
+
+            // Checkmark USUÁRIO COMEÇA DESLOGADO
+            const userMenu = document.querySelector('.user-menu');
+            const loginBtn = document.getElementById('loginBtn');
+            const dropdown = document.getElementById('userDropdown');
+            const switchAccount = document.getElementById('switchAccount');
+            const logout = document.getElementById('logout');
+            let isLoggedIn = false;  // <--- AGORA COMEÇA DESLOGADO
+            let currentUser = '';
+
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!isLoggedIn) {
+                    loginModal.style.display = 'block';
+                } else {
+                    dropdown.classList.toggle('show');
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!userMenu.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                }
+            });
+
+            switchAccount.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdown.classList.remove('show');
+                loginModal.style.display = 'block';
+                statusTitle.textContent = 'Trocar de Conta';
+                statusMessage.textContent = 'Faça login com outra conta.';
+                statusModal.style.display = 'block';
+            });
+
+            logout.addEventListener('click', (e) => {
+                e.preventDefault();
+                dropdown.classList.remove('show');
+                isLoggedIn = false;
+                currentUser = '';
+                loginBtn.innerHTML = 'Fazer Login';
+                loginBtn.style.backgroundColor = '';
+                loginBtn.style.color = '';
+                statusTitle.textContent = 'Deslogado';
+                statusMessage.textContent = 'Você saiu da conta com sucesso.';
+                statusModal.style.display = 'block';
+            });
+
+            // LOGIN FUNCIONA
+            loginForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const user = document.getElementById('username').value.split('@')[0] || 'Usuário';
+                loginModal.style.display = 'none';
+                isLoggedIn = true;
+                currentUser = user;
+                loginBtn.innerHTML = `Olá, ${user} <span style="margin-left: 8px; font-size: 0.8em;">Down Arrow</span>`;
+                loginBtn.style.backgroundColor = 'var(--cor-sucesso)';
+                loginBtn.style.color = 'black';
+                statusTitle.textContent = 'Login Realizado!';
+                statusMessage.textContent = `Bem-vindo(a), ${user}!`;
+                statusModal.style.display = 'block';
+            });
+
+            // ABAS
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tab = link.dataset.tab;
+                    document.querySelectorAll('.tab-link').forEach(l => l.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    link.classList.add('active');
+                    document.getElementById(tab).classList.add('active');
+                });
+            });
+
+            document.getElementById('priceText').innerHTML = 'A partir de <strong>R$ 9,90</strong>/aluno/mês';
+
+            // CHATBOT
             const addMessage = (text, sender) => {
                 const div = document.createElement('div');
                 div.className = `message ${sender}`;
@@ -661,8 +798,6 @@
                 document.getElementById('chatBody').appendChild(div);
                 div.scrollIntoView({ behavior: 'smooth' });
             };
-
-            // RESPOSTAS
             const responses = {
                 aluno: "O aluno usa uma ferramenta simples com lembretes automáticos. Basta digitar a tarefa e a IA cria cronogramas reversos para nunca perder prazos!",
                 professor: "O professor tem o Painel de Acompanhamento (Plano Pro). Ele vê em tempo real quem não entregou tarefas e pode intervir antes do problema crescer.",
@@ -673,37 +808,27 @@
                 contato: "Clique em 'Fale com um Especialista' e preencha o formulário. Um consultor entra em contato em até 24h.",
                 default: "Desculpe, não entendi. Pergunte sobre: <strong>aluno</strong>, <strong>professor</strong>, <strong>gestor</strong>, <strong>planos</strong>, <strong>PIX</strong> ou <strong>contato</strong>."
             };
-
-            // REPLY INTELIGENTE
             const reply = input => {
                 const lower = input.toLowerCase().trim();
                 let key = 'default';
-
                 if (lower.includes('aluno') || lower.includes('organização') || lower.includes('1')) key = 'aluno';
                 else if (lower.includes('professor') || lower.includes('lembrete') || lower.includes('2')) key = 'professor';
                 else if (lower.includes('gestor') || lower.includes('sugestão') || lower.includes('3')) key = 'gestor';
                 else if (lower.includes('plano') || lower.includes('gratis')) key = 'plano';
                 else if (lower.includes('pix')) key = 'pix';
                 else if (lower.includes('contato')) key = 'contato';
-
                 setTimeout(() => addMessage(responses[key], 'ai'), 600);
             };
-
-            // CHATBOT TOGGLE
             document.getElementById('chatbotToggle').onclick = () => {
                 const win = document.getElementById('chatbotWindow');
                 const wasHidden = win.style.display === 'none' || win.style.display === '';
-
                 win.style.display = wasHidden ? 'flex' : 'none';
-
                 if (wasHidden && firstChatOpen) {
                     setTimeout(() => addMessage("Olá! Sou sua assistente de organização. Em que área você gostaria de focar: <strong>Aluno</strong>, <strong>Professor</strong>, <strong>Gestor</strong> ou <strong>Planos</strong>?", 'ai'), 300);
                     setTimeout(() => addMessage("Claro! Posso te ajudar com:<br>1. Organização de tarefas<br>2. Lembretes de prazos<br>3. Sugestões de estudo.", 'ai'), 900);
                     firstChatOpen = false;
                 }
             };
-
-            // ENVIAR MENSAGEM
             document.getElementById('chatSend').onclick = () => {
                 const input = document.getElementById('chatInput');
                 const text = input.value.trim();
@@ -712,47 +837,18 @@
                 reply(text);
                 input.value = '';
             };
-
             document.getElementById('chatInput').addEventListener('keypress', e => {
                 if (e.key === 'Enter') document.getElementById('chatSend').click();
             });
-
             document.getElementById('chatClose').onclick = () => {
                 document.getElementById('chatbotWindow').style.display = 'none';
             };
 
-            // OUTRAS AÇÕES
             activateFreePlanBtn.addEventListener('click', e => {
                 e.preventDefault();
                 statusTitle.textContent = 'Plano Ativado!';
                 statusMessage.textContent = 'O Plano Essencial Gratuito foi ativado com sucesso!';
                 statusModal.style.display = 'block';
-            });
-
-            loginBtn.addEventListener('click', e => {
-                e.preventDefault();
-                if (loginBtn.textContent.includes('Olá')) {
-                    statusTitle.textContent = 'Logout';
-                    statusMessage.textContent = 'Você saiu da conta.';
-                    statusModal.style.display = 'block';
-                    loginBtn.textContent = 'Fazer Login';
-                    loginBtn.style.backgroundColor = 'var(--cor-primaria-foco)';
-                    loginBtn.style.color = 'white';
-                } else {
-                    loginModal.style.display = 'block';
-                }
-            });
-
-            loginForm.addEventListener('submit', e => {
-                e.preventDefault();
-                const user = document.getElementById('username').value.split('@')[0] || 'Kally';
-                loginModal.style.display = 'none';
-                statusTitle.textContent = 'Login Simulado!';
-                statusMessage.textContent = `Bem-vindo(a), ${user}!`;
-                statusModal.style.display = 'block';
-                loginBtn.textContent = `Olá, ${user}`;
-                loginBtn.style.backgroundColor = 'var(--cor-sucesso)';
-                loginBtn.style.color = 'black';
             });
 
             buyButtons.forEach(btn => {
@@ -764,7 +860,7 @@
                         statusTitle.textContent = 'Plano Ativado!';
                         statusMessage.textContent = `O ${currentPlan} foi ativado!`;
                         statusModal.style.display = 'block';
-                    } else if (currentPlan.includes('Institucional')) {
+                    } else if (currentPlan.includes('Institution')) {
                         contactModal.style.display = 'block';
                     } else {
                         document.getElementById('confirmPixModal').style.display = 'block';
@@ -778,7 +874,6 @@
                 statusMessage.textContent = `Compra do ${currentPlan} (${currentPrice}) concluída!`;
                 statusModal.style.display = 'block';
             };
-
             document.getElementById('cancelPix').onclick = () => {
                 document.getElementById('confirmPixModal').style.display = 'none';
             };
@@ -792,14 +887,12 @@
                 contactForm.reset();
             });
 
-            // FECHAR MODAIS CLICANDO FORA
             window.onclick = function(event) {
                 if (event.target == loginModal) loginModal.style.display = "none";
                 if (event.target == statusModal) statusModal.style.display = "none";
-                if (event.target == confirmPixModal) confirmPixModal.style.display = "none";
+                if (event.target == document.getElementById('confirmPixModal')) document.getElementById('confirmPixModal').style.display = "none";
                 if (event.target == contactModal) contactModal.style.display = "none";
             };
-
         });
     </script>
 </body>
