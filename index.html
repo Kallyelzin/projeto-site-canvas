@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domine a Organização Escolar: Plataforma de Gestão de Tarefas</title>
+    <style>
+        :root {
+            --cor-fundo-principal: #121212;
+            --cor-fundo-secundario: #1e1e1e;
+            --cor-texto: #e0e0e0;
+            --cor-primaria-foco: #007bff; /* Azul */
+            --cor-secundaria-foco: #0056b3;
+            --cor-cabecalho: #0a0a0a;
+            --cor-preto-udemy: #000000;
+            --cor-sucesso: #28a745; /* Verde */
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--cor-fundo-principal);
+            color: var(--cor-texto);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            background-color: var(--cor-cabecalho);
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--cor-texto);
+        }
+        .navbar nav a {
+            color: var(--cor-texto);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .navbar nav a:hover {
+            color: var(--cor-primaria-foco);
+        }
+        .cta-button {
+            background-color: var(--cor-primaria-foco);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        .cta-button:hover {
+            background-color: var(--cor-secundaria-foco);
+        }
+        .hero-section {
+            display: flex;
+            align-items: center;
+            padding: 100px 0;
+            background-color: var(--cor-preto-udemy);
+            position: relative;
+            overflow: hidden;
+            justify-content: center;
+        }
+        .hero-content {
+            z-index: 10;
+            max-width: 500px;
+            background-color: var(--cor-fundo-principal);
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .hero-content h2 {
+            font-size: 2.5em;
+            color: white;
+            margin: 0 0 20px;
+        }
+        .hero-content p strong {
+            color: var(--cor-sucesso);
+        }
+        .design-element {
+            display: none;
+        }
+        .course-tabs {
+            padding: 40px 0;
+            scroll-margin-top: 80px;
+            background-color: var(--cor-fundo-principal);
+        }
+        .course-tabs h2 {
+            font-size: 2em;
+            color: white;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .course-card {
+            background-color: var(--cor-preto-udemy);
+            border: 1px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.2);
+        }
+        .course-image {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, var(--cor-primaria-foco) 0%, #001f3f 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: white;
+            font-weight: bold;
+            border-bottom: 1px solid #333;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .card-content {
+            padding: 15px;
+        }
+        .card-content h4 {
+            color: white;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .card-content .author {
+            color: #aaa;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .card-content .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--cor-sucesso);
+        }
+        .buy-button {
+            background-color: var(--cor-primaria-foco);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-top: 15px;
+            display: block;
+            width: 100%;
+            font-weight: bold;
+        }
+        .plan-section {
+            background-color: var(--cor-preto-udemy);
+            padding: 60px 0;
+            margin-top: 40px;
+            scroll-margin-top: 80px;
+        }
+        .plan-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--cor-fundo-principal);
+            border-radius: 10px;
+            padding: 40px;
+            gap: 50px;
+        }
+        .plan-text {
+            flex: 1;
+        }
+        .plan-text h2 {
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+        .plan-features li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            font-size: 1.1em;
+        }
+        .plan-features li::before {
+            content: '✅'; /* Ícone de checkmark mais amigável */
+            margin-right: 10px;
+            font-size: 1.1em;
+            color: var(--cor-sucesso);
+            font-weight: bold;
+            line-height: 1;
+        }
+        .plan-image {
+            width: 45%;
+            height: 300px;
+            background: #001f3f;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .plan-image canvas {
+            max-width: 100%;
+            max-height: 100%;
+            display: block;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            padding-top: 60px;
+        }
+        .modal-content {
+            background-color: var(--cor-fundo-secundario);
+            margin: 5% auto;
+            padding: 30px;
+            border: 1px solid var(--cor-primaria-foco);
+            width: 80%;
+            max-width: 500px;
+            border-radius: 8px;
+            color: #e0e0e0;
+        }
+        .modal-content .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .modal-content .close:hover {
+            color: white;
+        }
+        .modal-input-group {
+            margin-bottom: 15px;
+        }
+        .modal-input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .modal-content input[type="text"],
+        .modal-content input[type="email"],
+        .modal-content input[type="password"],
+        .modal-content select,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 10px 0;
+            border: 1px solid #555;
+            background-color: #333;
+            color: #e0e0e0;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        #loginModal .modal-content {
+            text-align: left;
+            padding: 30px;
+        }
+        #loginModal form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--cor-primaria-foco);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 60px;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.5);
+            z-index: 1001;
+            transition: transform 0.2s;
+        }
+        .chatbot-toggle:hover {
+            transform: scale(1.05);
+        }
+        .chatbot-window {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: #222;
+            border: 1px solid var(--cor-primaria-foco);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+        }
+        /* NOVO ESTILO PARA O CABEÇALHO DO CHAT */
+        .chat-header {
+            padding: 10px 15px;
+            background-color: var(--cor-primaria-foco);
+            color: white;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header .close {
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+            line-height: 1;
+            transition: opacity 0.2s;
+        }
+        .chat-header .close:hover {
+            opacity: 0.8;
+        }
+        .chat-body {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* NOVO ESTILO: Barra de Input do Chat */
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            background-color: #222; /* Fundo escuro */
+            border-top: 1px solid #333;
+        }
+
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #444; /* Borda sutil */
+            background-color: #121212;
+            color: #e0e0e0;
+            border-radius: 20px; /* Bordas arredondadas */
+            margin: 0;
+            margin-right: 10px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input input:focus {
+            border-color: var(--cor-primaria-foco); /* Foco azul */
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: var(--cor-primaria-foco); /* Cor do botão como o azul primário */
+            font-size: 1.5em; /* Aumenta o tamanho do ícone */
+            cursor: pointer;
+            padding: 0 10px;
+            transition: color 0.3s, transform 0.1s;
+            font-weight: bold; /* Para o ícone ser mais visível */
+        }
+
+        .chat-input button:hover {
+            color: var(--cor-secundaria-foco);
+            transform: scale(1.1);
+        }
+
+        /* Fim dos novos estilos do chat-input */
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 18px;
+            max-width: 85%;
+            word-wrap: break-word;
+            font-size: 0.95em;
+        }
+        .message.ai {
+            background-color: #007bff;
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+        .message.user {
+            background-color: #333;
+            color: #e0e0e0;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('loginModal').style.display='none'">×</span>
+            <h3 style="color: var(--cor-primaria-foco); border-bottom: 2px solid var(--cor-primaria-foco); padding-bottom: 10px; margin-bottom: 20px;">
+                Fazer Login na Task Master Edu
+            </h3>
+            <form id="loginForm">
+                <div class="modal-input-group">
+                    <label for="username">Nome de Usuário/E-mail:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="modal-input-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%; margin-top: 10px;">Entrar</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="statusModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close" onclick="document.getElementById('statusModal').style.display='none'">×</span>
+            <h3 id="statusTitle" style="color: var(--cor-sucesso);">Sucesso!</h3>
+            <p id="statusMessage">Ação realizada com sucesso!</p>
+            <button class="cta-button" onclick="document.getElementById('statusModal').style.display='none'" style="margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <div id="confirmPixModal" class="modal">
+        <div class="modal-content" style="text-align: center;">
+            <span class="close" onclick="document.getElementById('confirmPixModal').style.display='none'">×</span>
+            <h3 style="color: #ffc107;">Confirmar Compra via PIX</h3>
+            <p><strong>Você gostaria mesmo de comprar esse plano?</strong></p>
+            <p style="background:#2a2a2a;padding:12px;border-radius:6px;font-family:monospace;color:#0f0;">
+                <strong>PIX:</strong> GrupoEM693@associacaocactus.com.br
+            </p>
+            
+            <p style="font-size:0.9em;color:#aaa;">Após o pagamento, o acesso será liberado automaticamente.</p>
+            <div style="display:flex;gap:10px;margin-top:20px;">
+                <button id="cancelPix" class="cta-button" style="background:#555;flex:1;">Cancelar</button>
+                <button id="confirmPix" class="cta-button" style="background:var(--cor-sucesso);flex:1;">Confirmar PIX</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('contactModal').style.display='none'">×</span>
+            <h3 style="color: var(--cor-primaria-foco); margin-bottom: 20px;">Fale com um Especialista</h3>
+            <form id="contactForm">
+                <div class="modal-input-group">
+                    <label>Nome:</label>
+                    <input type="text" required>
+                </div>
+                <div class="modal-input-group">
+                    <label>E-mail:</label>
+                    <input type="email" required>
+                </div>
+                <div class="modal-input-group">
+                    <label>Tipo de Instituição:</label>
+                    <select required>
+                        <option value="">Selecione...</option>
+                        <option>Escola Pública</option>
+                        <option>Escola Privada</option>
+                        <option>Secretaria de Educação</option>
+                        <option>Outro</option>
+                    </select>
+                </div>
+                <div class="modal-input-group">
+                    <label>Mensagem:</label>
+                    <textarea rows="4" placeholder="Descreva sua necessidade..."></textarea>
+                </div>
+                <button type="submit" class="cta-button" style="width:100%;margin-top:15px;">Enviar Solicitação</button>
+            </form>
+        </div>
+    </div>
+
+    <header>
+        <div class="container navbar">
+            <div class="logo">TASK MASTER EDU</div>
+            <nav>
+                <a href="#planos-section" style="margin-right: 20px;">Planos</a>
+                <a href="#" class="cta-button" id="loginBtn" style="background: var(--cor-sucesso); color: black;">Olá, Kally</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h2>Comece a Dominar a Organização Escolar Agora</h2>
+                <p>Se você tem dificuldade com prazos, temos uma boa notícia: por tempo limitado, o <strong>Plano Essencial</strong> é totalmente <strong>GRATUITO</strong> para novos alunos e escolas. Comece hoje mesmo e reduza o estresse!</p>
+                <button id="activateFreePlanBtn" class="cta-button" style="margin-top: 20px; width: 100%;">Ativar Plano Gratuito</button>
+                <p style="margin-top: 15px; font-size: 0.9em; color: #aaa;">Para alunos e professores da Rede Pública.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="course-tabs">
+        <div class="container">
+            <h2>Habilidades que Transformam a Organização Escolar</h2>
+            <div style="margin-bottom: 20px;">
+                <a href="#" style="color: white; font-weight: bold; padding-bottom: 5px; border-bottom: 2px solid white; margin-right: 15px; text-decoration: none;">Alunos</a>
+                <a href="#" style="color: #aaa; margin-right: 15px; text-decoration: none;">Professores</a>
+                <a href="#" style="color: #aaa; text-decoration: none;">Gestores</a>
+            </div>
+            <div class="course-grid">
+                <div class="course-card">
+                    <div class="course-image">Tarefas Inteligentes</div>
+                    <div class="card-content">
+                        <h4>Guia Prático: Organização Sem Esforço (Plano Essencial)</h4>
+                        <p class="author">Para Alunos do 6º ao 9º Ano</p>
+                        <p class="price">GRÁTIS</p>
+                        <button class="buy-button" data-plan="Plano Essencial Gratuito" data-price="GRÁTIS">Ativar Plano</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">Painel de Acompanhamento</div>
+                    <div class="card-content">
+                        <h4>Acompanhamento de Prazos (Plano Pro)</h4>
+                        <p class="author">Para Professores (Ferramenta Essencial)</p>
+                        <p class="price">R$ 46,90</p>
+                        <button class="buy-button" data-plan="Plano Pro" data-price="R$ 46,90">Comprar Agora</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">Intervenção Precoce</div>
+                    <div class="card-content">
+                        <h4>Sistema Escolar com Dados</h4>
+                        <p class="author">Para Gestores e Coordenadores</p>
+                        <p class="price">R$ 26,90</p>
+                        <button class="buy-button" data-plan="Plano Gestor" data-price="R$ 26,90">Comprar Agora</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">Solução Integrada</div>
+                    <div class="card-content">
+                        <h4>Implementação da Plataforma</h4>
+                        <p class="author">Para Escolas e Secretarias</p>
+                        <p class="price">Consultar</p>
+                        <button class="buy-button" data-plan="Plano Institucional" data-price="Consultar">Fale Conosco</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="plan-section" id="planos-section">
+        <div class="container">
+            <div class="plan-box">
+                <div class="plan-text">
+                    <h2>Reimagine a Organização em sua Escola na Era Digital</h2>
+                    <p>Prepare sua instituição para o futuro com o Plano Institucional. Tenha acesso à ferramenta completa de organização para alunos e ao painel de dados para professores.</p>
+                    <ul class="plan-features">
+                        <li>Acesso Gratuito e Completo ao Painel do Professor (65% dos professores beneficiados).</li>
+                        <li>Reduza a Inadimplência de Tarefas em sua Rede (Impacta 70% dos alunos).</li>
+                        <li>Pratique a Intervenção Precoce com dados em tempo real.</li>
+                        <li>Suporte e Treinamento Completo para sua equipe.</li>
+                    </ul>
+                    <button id="contactBtn" class="cta-button" style="background:white;color:black;margin-top:20px;">Fale com um Especialista</button>
+                    <p style="font-size:0.9em;color:#ccc;margin-top:10px;">A partir de R$ [Valor]/aluno/mês</p>
+                </div>
+                <div class="plan-image">
+                    <canvas id="dashboardChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="chatbot-toggle" id="chatbotToggle">💬</div> <div class="chatbot-window" id="chatbotWindow">
+        <div class="chat-header">TaskMaster AI Assistant <span class="close" id="chatClose">×</span></div>
+        <div class="chat-body" id="chatBody">
+            <div class="message ai">
+                Olá! Sou sua assistente de organização. Em que área você gostaria de focar: <strong>Aluno</strong>, <strong>Professor</strong>, <strong>Gestor</strong> ou <strong>Planos</strong>?
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Digite sua dúvida ou tarefa...">
+            <button id="chatSend">▶️</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // GRÁFICO
+            const ctx = document.getElementById('dashboardChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Professores Beneficiados', 'Impacto nos Alunos'],
+                    datasets: [{
+                        label: 'Percentual',
+                        data: [65, 70],
+                        backgroundColor: ['#007bff', '#28a745'],
+                        borderColor: ['#0056b3', '#1e7e34'],
+                        borderWidth: 1,
+                        borderRadius: 8,
+                        barThickness: 40
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, tooltip: { enabled: true } },
+                    scales: {
+                        y: { beginAtZero: true, max: 100, ticks: { color: '#aaa', callback: v => v + '%' }, grid: { color: '#333' } },
+                        x: { ticks: { color: '#ccc' }, grid: { display: false } }
+                    },
+                    animation: { delay: 300 }
+                }
+            });
+
+            // ELEMENTOS
+            const loginBtn = document.getElementById('loginBtn');
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const statusModal = document.getElementById('statusModal');
+            const statusTitle = document.getElementById('statusTitle');
+            const statusMessage = document.getElementById('statusMessage');
+            const buyButtons = document.querySelectorAll('.buy-button');
+            const contactBtn = document.getElementById('contactBtn');
+            const contactModal = document.getElementById('contactModal');
+            const contactForm = document.getElementById('contactForm');
+            const activateFreePlanBtn = document.getElementById('activateFreePlanBtn');
+            let currentPlan = '', currentPrice = '';
+            let firstChatOpen = true;
+
+            // FUNÇÃO PARA ADICIONAR MENSAGEM
+            const addMessage = (text, sender) => {
+                const div = document.createElement('div');
+                div.className = `message ${sender}`;
+                div.innerHTML = text;
+                document.getElementById('chatBody').appendChild(div);
+                div.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            // RESPOSTAS
+            const responses = {
+                aluno: "O aluno usa uma ferramenta simples com lembretes automáticos. Basta digitar a tarefa e a IA cria cronogramas reversos para nunca perder prazos!",
+                professor: "O professor tem o Painel de Acompanhamento (Plano Pro). Ele vê em tempo real quem não entregou tarefas e pode intervir antes do problema crescer.",
+                gestor: "Gestores usam o Plano Institucional com dados em tempo real. Reduza a inadimplência de tarefas em até 70% na sua rede!",
+                plano: "Temos 4 planos: Essencial (GRÁTIS), Pro (R$46,90), Gestor (R$26,90) e Institucional (sob consulta).",
+                gratis: "O Plano Essencial é 100% GRATUITO para alunos e professores da rede pública. Ative agora!",
+                pix: "Pagamentos são feitos via PIX: <strong>GrupoEM693@associacaocactus.com.br</strong>. Simulação apenas.",
+                contato: "Clique em 'Fale com um Especialista' e preencha o formulário. Um consultor entra em contato em até 24h.",
+                default: "Desculpe, não entendi. Pergunte sobre: <strong>aluno</strong>, <strong>professor</strong>, <strong>gestor</strong>, <strong>planos</strong>, <strong>PIX</strong> ou <strong>contato</strong>."
+            };
+
+            // REPLY INTELIGENTE
+            const reply = input => {
+                const lower = input.toLowerCase().trim();
+                let key = 'default';
+
+                if (lower.includes('aluno') || lower.includes('organização') || lower.includes('1')) key = 'aluno';
+                else if (lower.includes('professor') || lower.includes('lembrete') || lower.includes('2')) key = 'professor';
+                else if (lower.includes('gestor') || lower.includes('sugestão') || lower.includes('3')) key = 'gestor';
+                else if (lower.includes('plano') || lower.includes('gratis')) key = 'plano';
+                else if (lower.includes('pix')) key = 'pix';
+                else if (lower.includes('contato')) key = 'contato';
+
+                setTimeout(() => addMessage(responses[key], 'ai'), 600);
+            };
+
+            // CHATBOT TOGGLE
+            document.getElementById('chatbotToggle').onclick = () => {
+                const win = document.getElementById('chatbotWindow');
+                const wasHidden = win.style.display === 'none' || win.style.display === '';
+
+                win.style.display = wasHidden ? 'flex' : 'none';
+
+                if (wasHidden && firstChatOpen) {
+                    setTimeout(() => addMessage("Olá! Sou sua assistente de organização. Em que área você gostaria de focar: <strong>Aluno</strong>, <strong>Professor</strong>, <strong>Gestor</strong> ou <strong>Planos</strong>?", 'ai'), 300);
+                    setTimeout(() => addMessage("Claro! Posso te ajudar com:<br>1. Organização de tarefas<br>2. Lembretes de prazos<br>3. Sugestões de estudo.", 'ai'), 900);
+                    firstChatOpen = false;
+                }
+            };
+
+            // ENVIAR MENSAGEM
+            document.getElementById('chatSend').onclick = () => {
+                const input = document.getElementById('chatInput');
+                const text = input.value.trim();
+                if (!text) return;
+                addMessage(text, 'user');
+                reply(text);
+                input.value = '';
+            };
+
+            document.getElementById('chatInput').addEventListener('keypress', e => {
+                if (e.key === 'Enter') document.getElementById('chatSend').click();
+            });
+
+            document.getElementById('chatClose').onclick = () => {
+                document.getElementById('chatbotWindow').style.display = 'none';
+            };
+
+            // OUTRAS AÇÕES
+            activateFreePlanBtn.addEventListener('click', e => {
+                e.preventDefault();
+                statusTitle.textContent = 'Plano Ativado!';
+                statusMessage.textContent = 'O Plano Essencial Gratuito foi ativado com sucesso!';
+                statusModal.style.display = 'block';
+            });
+
+            loginBtn.addEventListener('click', e => {
+                e.preventDefault();
+                if (loginBtn.textContent.includes('Olá')) {
+                    statusTitle.textContent = 'Logout';
+                    statusMessage.textContent = 'Você saiu da conta.';
+                    statusModal.style.display = 'block';
+                    loginBtn.textContent = 'Fazer Login';
+                    loginBtn.style.backgroundColor = 'var(--cor-primaria-foco)';
+                    loginBtn.style.color = 'white';
+                } else {
+                    loginModal.style.display = 'block';
+                }
+            });
+
+            loginForm.addEventListener('submit', e => {
+                e.preventDefault();
+                const user = document.getElementById('username').value.split('@')[0] || 'Kally';
+                loginModal.style.display = 'none';
+                statusTitle.textContent = 'Login Simulado!';
+                statusMessage.textContent = `Bem-vindo(a), ${user}!`;
+                statusModal.style.display = 'block';
+                loginBtn.textContent = `Olá, ${user}`;
+                loginBtn.style.backgroundColor = 'var(--cor-sucesso)';
+                loginBtn.style.color = 'black';
+            });
+
+            buyButtons.forEach(btn => {
+                btn.addEventListener('click', e => {
+                    e.preventDefault();
+                    currentPlan = btn.dataset.plan;
+                    currentPrice = btn.dataset.price;
+                    if (currentPlan.includes('Gratuito')) {
+                        statusTitle.textContent = 'Plano Ativado!';
+                        statusMessage.textContent = `O ${currentPlan} foi ativado!`;
+                        statusModal.style.display = 'block';
+                    } else if (currentPlan.includes('Institucional')) {
+                        contactModal.style.display = 'block';
+                    } else {
+                        document.getElementById('confirmPixModal').style.display = 'block';
+                    }
+                });
+            });
+
+            document.getElementById('confirmPix').onclick = () => {
+                document.getElementById('confirmPixModal').style.display = 'none';
+                statusTitle.textContent = 'Pagamento Simulado!';
+                statusMessage.textContent = `Compra do ${currentPlan} (${currentPrice}) concluída!`;
+                statusModal.style.display = 'block';
+            };
+
+            document.getElementById('cancelPix').onclick = () => {
+                document.getElementById('confirmPixModal').style.display = 'none';
+            };
+
+            contactForm.addEventListener('submit', e => {
+                e.preventDefault();
+                contactModal.style.display = 'none';
+                statusTitle.textContent = 'Mensagem Enviada!';
+                statusMessage.textContent = 'Sua solicitação foi enviada com sucesso. Em breve, um especialista entrará em contato!';
+                statusModal.style.display = 'block';
+                contactForm.reset();
+            });
+
+            // FECHAR MODAIS CLICANDO FORA
+            window.onclick = function(event) {
+                if (event.target == loginModal) loginModal.style.display = "none";
+                if (event.target == statusModal) statusModal.style.display = "none";
+                if (event.target == confirmPixModal) confirmPixModal.style.display = "none";
+                if (event.target == contactModal) contactModal.style.display = "none";
+            };
+
+        });
+    </script>
+</body>
+</html>
